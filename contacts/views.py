@@ -5,7 +5,10 @@ from .models import Address, Person
 from .utils import get_latlng
 
 def all(request):
-    context = {'people': Person.objects.order_by('name')}
+    context = {
+        'people': Person.objects.order_by('name'),
+        'form': SearchForm()
+    }
     return render(request, 'contacts/all.html', context)
 
 def search(request):

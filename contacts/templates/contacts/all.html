@@ -1,24 +1,30 @@
-<p><a href={% url 'search' %}>Search</a></p>
+{% extends "contacts/base.html" %}
 
-<table>
-	<tr>
-		<th>Name</th>
-		<th>Address</th>
-		<th>Errors</th>
-	</tr>
-	{% for person in people %}
-		{% for address in person.address_set.all %}
-			<tr>
-				{% if forloop.first %}
-					<td>{{ person }}</td>
-				{% else %}
-					<td></td>
-				{% endif %}
-				<td>{{ address }}</td>
-				<td>{{ address.latlng_error }}</td>
-			</tr>
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Errors</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for person in people %}
+			{% for address in person.address_set.all %}
+				<tr>
+					{% if forloop.first %}
+						<td>{{ person }}</td>
+					{% else %}
+						<td></td>
+					{% endif %}
+					<td>{{ address }}</td>
+					<td>{{ address.latlng_error }}</td>
+				</tr>
+			{% endfor %}
 		{% endfor %}
-	{% endfor %}
+	</tbody>
 </table>
 
-<p><a href={% url 'search' %}>Search</a></p>
+{% endblock %}
