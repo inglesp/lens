@@ -21,7 +21,8 @@ def update_person(raw_person):
 
     if person.name != ab_person.name():
         person.name = ab_person.name()
-        person.save()
+        if person.name:
+            person.save()
 
     update_addresses(person, ab_person)
 
