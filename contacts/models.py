@@ -33,7 +33,7 @@ class PersonManager(models.Manager):
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, db_index=True)
     address_book_id = models.CharField(max_length=255)
 
     objects = PersonManager()
