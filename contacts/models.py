@@ -94,7 +94,7 @@ class ABPerson(object):
         elif last is None:
             return first
         else:
-            return '{} {}'.format(first, last)
+            return u'{} {}'.format(first, last)
 
     def ab_addresses(self):
         address_prop = self.raw_person.valueForProperty_('Address')
