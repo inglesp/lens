@@ -14,16 +14,22 @@ class AddressesManager(models.Manager):
         return self.filter(~Q(lat='') & ~Q(lng=''))
 
     def without_latlng(self):
-        return self.filter(Q(lat='') | Q(lng=''))
+        return self.filter(Q(lat='') | Q(lng='')).exclude(latlng_error__in=['Multiple results returned', 'No results returned'])
 
     def near_to(self, latlng, radius_in_miles):
+        print '-' * 80
+        print 'Finding addresses within {} miles of {}'.format(radius_in_miles, latlng)
         addresses = []
         for address in self.with_latlng():
+            print 'Considering: {} ({})'.format(address, address.person)
             distance_in_miles = haversine(address.latlng(), latlng, miles=True)
+            print 'Distance in miles:', distance_in_miles
             if distance_in_miles < radius_in_miles:
+                print 'Within distance'
                 address.distance_in_miles = distance_in_miles
                 addresses.append(address)
 
+        print '-' * 80
         return sorted(addresses, key=lambda address: address.distance_in_miles)
 
 
@@ -72,6 +78,7 @@ class Address(models.Model):
             self.latlng_error = ''
         except utils.LatLngError as e:
             self.lat, self.lng = '', ''
+            print 'Error when updating latlng for {} ({})'.format(self, e)
             self.latlng_error = str(e)
         self.save()
 

@@ -7,7 +7,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Address</th>
-			<th>Errors</th>
+			<th>Lat/Lng</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,8 +19,16 @@
 					{% else %}
 						<td></td>
 					{% endif %}
-					<td>{{ address }}</td>
-					<td>{{ address.latlng_error }}</td>
+					<td>
+						{{ address }}
+					</td>
+					<td>
+						{% if address.lat %}
+						{{ address.lat }} / {{ address.lng }}
+						{% else %}
+						{{ address.latlng_error }}
+						{% endif %}
+					</td>
 				</tr>
 			{% endfor %}
 		{% endfor %}

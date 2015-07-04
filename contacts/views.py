@@ -11,6 +11,13 @@ def all(request):
     }
     return render(request, 'contacts/all.html', context)
 
+def with_errors(request):
+    context = {
+        'people': Person.objects.exclude(address__latlng_error='').order_by('name'),
+        'form': SearchForm()
+    }
+    return render(request, 'contacts/all.html', context)
+
 def search(request):
     postcode = request.GET.get('postcode')
     if postcode:
