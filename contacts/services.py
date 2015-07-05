@@ -1,5 +1,5 @@
 import AddressBook as ab
-from .models import Person, Address, ABPerson, ABAddress
+from .models import Person, Address, ABPerson
 
 
 def load_from_address_book():
@@ -19,10 +19,11 @@ def update_person(raw_person):
     person, _ = Person.objects.get_or_create(address_book_id=raw_person.uniqueId())
     ab_person = ABPerson(raw_person)
 
-    if person.name != ab_person.name():
-        person.name = ab_person.name()
-        if person.name:
-            person.save()
+    person.name = ab_person.name()
+    person.organization = ab_person.organization()
+    
+    if person.name:
+        person.save()
 
     update_addresses(person, ab_person)
 

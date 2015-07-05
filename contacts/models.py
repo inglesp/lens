@@ -39,13 +39,17 @@ class PersonManager(models.Manager):
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=255, db_index=True)
     address_book_id = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, db_index=True)
+    organization = models.CharField(max_length=255, null=True)
 
     objects = PersonManager()
 
     def __unicode__(self):
-        return self.name
+        if self.organization:
+            return u'{} ({})'.format(self.name, self.organization)
+        else:
+            return self.name
 
     def create_address(self, ab_address):
         attrs = dict(zip(ADDRESS_FIELDS, ab_address.elements))
@@ -102,6 +106,9 @@ class ABPerson(object):
             return first
         else:
             return u'{} {}'.format(first, last)
+
+    def organization(self):
+        return self.raw_person.valueForProperty_('Organization')
 
     def ab_addresses(self):
         address_prop = self.raw_person.valueForProperty_('Address')
