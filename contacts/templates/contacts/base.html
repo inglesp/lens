@@ -30,7 +30,18 @@
 </nav>
 
 <div class="container">
-{% block content %}{% endblock %}
+	<p>
+	<a href={% url 'all' %}>View all contacts</a>
+	|
+	<a href={% url 'with_addresses' %}>View contacts with addresses</a>
+	|
+	<a href={% url 'without_addresses' %}>View contacts without addresses</a>
+	|
+	<a href={% url 'with_errors' %}>View contacts with errors</a>
+	</p>
+
+	{% block content %}{% endblock %}
+
 </div>
 
 </body>

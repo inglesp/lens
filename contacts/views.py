@@ -13,7 +13,21 @@ def all(request):
 
 def with_errors(request):
     context = {
-        'people': Person.objects.exclude(address__latlng_error='').order_by('name'),
+        'people': Person.objects.exclude(address__isnull=True).exclude(address__latlng_error='').order_by('name'),
+        'form': SearchForm()
+    }
+    return render(request, 'contacts/all.html', context)
+
+def with_addresses(request):
+    context = {
+        'people': Person.objects.exclude(address__isnull=True).order_by('name'),
+        'form': SearchForm()
+    }
+    return render(request, 'contacts/all.html', context)
+
+def without_addresses(request):
+    context = {
+        'people': Person.objects.exclude(address__isnull=False).order_by('name'),
         'form': SearchForm()
     }
     return render(request, 'contacts/all.html', context)

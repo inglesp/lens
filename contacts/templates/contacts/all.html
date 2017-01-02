@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -29,6 +29,12 @@
 						{{ address.latlng_error }}
 						{% endif %}
 					</td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td>{{ person }}</td>
+					<td></td>
+					<td></td>
 				</tr>
 			{% endfor %}
 		{% endfor %}
